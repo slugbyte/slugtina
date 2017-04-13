@@ -6,13 +6,16 @@ var state = {
   views: {},
   paint: false,
   lineWidth: 3,
+  color: '#000',
+  backgroundColor: '#fff',
   pallet: [
-    '#ff7a7a',
-    '#7aff7a',
-    '#7a7aff',
-    '#f0c000',
-    '#77aaff',
+    '#fff',
     '#000',
+    '#7aff7a',
+    '#f0c000',
+    '#ff7a7a',
+    '#7a7aff',
+    '#77aaff',
   ],
   strokes: [],
   strokeHistory: [],
@@ -26,7 +29,9 @@ function lineWidthSet(width){
 
   state.lineWidth = width;
   if(state.views.brushSize){
-    state.views.brushSize.textContent = state.lineWidth;
+    state.views.brushSize.style.background = '#000';
+    state.views.brushSize.style.width = (width + 4) + 'px'
+    state.views.brushSize.style.height = (width + 4) + 'px'
   }
 }
 
@@ -40,7 +45,8 @@ function strokeUndo(){
   }
 
   state.lastRender = 0;
-  state.ctx.clearRect(0, 0, state.sb.width, state.sb.height);
+  state.ctx.fillStyle = state.backgroundColor;
+  state.ctx.fillRect(0, 0, state.sb.width, state.sb.height);
   render();
 }
 
@@ -58,26 +64,26 @@ function render(){
   if (state.ctx) {
     var ctx = state.ctx;
     ctx.lineJoin = ctx.lineCap = 'round';
-    ctx.shadowBlur = 1;
 
     var stroke;
     var next = state.lastRender || 0;
 
     for (var i=next; i< state.strokes.length; i++){
       stroke = state.strokes[i];
+      ctx.shadowBlur = 0.75;
 
       switch(stroke.type){
         case 'down':
-          //ctx.shadowColor= stroke.color;
-          ctx.lineWidth = stroke.lineWidth;
-          ctx.strokeStyle = stroke.color;
-          ctx.beginPath()
-          ctx.moveTo(stroke.x, stroke.y);
-          break;
+          ctx.shadowColor= stroke.color;
+        ctx.lineWidth = stroke.lineWidth;
+        ctx.strokeStyle = stroke.color;
+        ctx.beginPath()
+        ctx.moveTo(stroke.x, stroke.y);
+        break;
         case 'move':
           ctx.lineTo(stroke.x , stroke.y );
-          ctx.moveTo(stroke.x, stroke.y);
-          break;
+        ctx.moveTo(stroke.x, stroke.y);
+        break;
         default:
           ctx.lineTo(stroke.x, stroke.y);
       }
@@ -171,27 +177,40 @@ function sbSetupClearHandle(){
 
 function keyboardShortcuts(){
   if(state.sb){
-    document.onkeypress = function(e){
+    document.body.addEventListener('keydown', function(e){
       console.log('e', e);
       switch(e.key){
         case 'c':
-          setTimeout(sbClear, 100);
+          sbClear()
         break;
         case 'u':
-          setTimeout(strokeUndo, 100);
+          strokeUndo()
+        break;
+        case 'e':
+          colorSet(state.backgroundColor);
+        break;
+        case 'i':
+          state.backgroundColor = state.backgroundColor === '#fff' ? '#000' : '#fff';
+        sbClear();
+        break;
+        case '+':
+          lineWidthSet(state.lineWidth + 15);
         break;
         case '=':
           lineWidthSet(state.lineWidth + 2);
         break;
-        case '-':
-          lineWidthSet(state.lineWidth - 2)
+        case '_':
+          lineWidthSet(state.lineWidth - 15)
         break;
-        case '1': case '2': case '3': case '4': case '5': case '6':
+        case '-':
+          lineWidthSet(state.lineWidth - 2);
+        break;
+        case '1': case '2': case '3': case '4': case '5': case '6': case '7':
           colorSet(state.pallet[parseInt(e.key) - 1]);
         break;
         default:
       }
-    };
+    });
   }
 }
 
@@ -208,7 +227,8 @@ function sbClear(){
     state.strokes = [];
     state.strokeHistory = [];
     state.lastRender = 0;
-    state.ctx.clearRect(0, 0, state.sb.width, state.sb.height);
+    state.ctx.fillStyle = state.backgroundColor;
+    state.ctx.fillRect(0, 0, state.sb.width, state.sb.height);
     render();
   }
 }
@@ -247,5 +267,6 @@ window.onload = function(){
 
 window.onresize = function(){
   sbResize();
+  sbClear();
 }
 

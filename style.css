@@ -28,6 +28,7 @@ html, body, canvas {
   border-radius: 100px;
   background: black;
   list-style: none;
+  border: 2px solid #444;
 }
 
 .color-container li:hover  {
@@ -74,4 +75,5 @@ html, body, canvas {
   display: inline;
   bottom: 15px;
   margin-left: 60px;
+  border-radius: 200px;
 }
