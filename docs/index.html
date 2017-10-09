@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+<link href="bundle.a8b5edcbd2bdee1c9f4d.css" rel="stylesheet"></head>
+<body>
+  <main class="container board">
+    <canvas id="slugboard"> </canvas>
+  </main>
+
+  <div class="container controller">
+    <div class="container color-preview" id="color-preview"></div>
+    <div class="container tool-box">
+      <button id="brush-select"> B </button> 
+      <input min="1" class="slider" id="brush-size" type="range" >
+      <button id="eraser-select"> E </button> 
+      <input min="1" class="slider dark" id="eraser-size" type="range" >
+    </div>
+    <div class="container color-pallet" >
+      <ul id="color-pallet"> </ul>
+    </div>
+    <div class="container history"> 
+      <button id='history-undo'> &lt; </button>
+      <button id='history-redo'> &gt; </button>
+      <button id='history-clear'> X </button>
+    </div>
+  </div>
+
+  <script src="app.js"> </script>
+<script type="text/javascript" src="bundle.a8b5edcbd2bdee1c9f4d.js"></script></body>
+</html>

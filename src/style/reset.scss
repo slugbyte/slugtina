@@ -1,0 +1,19 @@
+* {
+  position: static;
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  font-weight: normal;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+*:focus {
+  border: none;
+  outline: none;
+}
