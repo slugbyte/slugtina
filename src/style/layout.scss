@@ -1,0 +1,121 @@
+.container {
+  float: left;
+}
+
+.board {
+  height: 90%;
+}
+
+.controller{
+  height: 10%;
+
+  .container {
+    height: 100%;
+  }
+
+  .color-preview {
+    width: 10vh;
+    background: yellow;
+    border: 0.5em solid #444;
+  }
+
+  .tool-box {
+    width: calc(25% - 10vh);
+    background: black;
+
+    button {
+      width: 10% !important;
+      height: 50%;
+      float: left;
+      font-weight: bolder;
+      font-size: 1.5em;
+      background: #aaaa00;
+      &:hover {
+        background: #aaaa00 * 0.7;
+      }
+      &:active{
+        background: #aaaa00 * 0.5;
+      }
+    }
+
+    button.selected {
+      color: white;
+    }
+
+    input {
+      width: 90% !important;
+      float: left;
+    }
+  }
+
+  .color-pallet {
+    width: 50%;
+    background: black;
+
+    ul {
+      height: 100%; 
+      li {
+        float: left;
+        width: calc(100% / 7);
+        height: 100%; 
+        transition: 200ms;
+
+        &:hover {
+          transform: scale(0.9);
+          border-radius: 10%;
+        }
+      }
+    }
+  }
+
+  .history {
+    width: 25%;
+    background: black;
+
+    button {
+      width: calc(100%/3);
+      float: left;
+      height: 100%;
+      font-size: 2em;
+      font-weight: bolder;
+      background: #444;
+      color: #777;
+      transition: 200ms;
+
+      &:nth-child(2){
+        background: #777;
+        color: #444;
+      }
+
+      &:nth-child(3){
+        background: salmon;
+        color: red * 0.6;
+        border: 0.25em solid red;
+        &:hover{
+          background: red * 0.7 !important;
+          border-color: red !important;
+          color: red ;
+        }
+
+        &:active {
+          color: red !important;
+          background: red * 0.4 !important;
+          border-color: red !important;
+        };
+      }
+
+      &:hover{
+        background: #aaa !important;
+        color: white ;
+        border-color: white !important;
+        font-size: 2.5em;;
+      }
+
+      &:active {
+        background: #fff !important;
+        color: #444; 
+      }
+    }
+  }
+}
+
