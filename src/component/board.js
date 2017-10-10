@@ -4,7 +4,7 @@ let {getState, dispatch} = store
 let historyIndex = 0
 let strokeBuffer = null
 
-const board = document.getElementById('slugboard')
+const board = document.getElementById('main-board')
 const ctx = board.getContext('2d')
 
 export const strokeRender = ({data, start=0}) => {
@@ -120,3 +120,10 @@ board.addEventListener('mouseup', (e) => {
   draw()
 })
 
+setTimeout(() => {
+  let img = new Image()
+  img.src = 'http://nytgribskov.dk/wp-content/uploads/2013/09/tegning.jpg'
+  img.onload = () => {
+    ctx.drawImage(img, 0, 0, 1000, 1000)
+  }
+}, 100)
