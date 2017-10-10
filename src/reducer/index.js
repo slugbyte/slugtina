@@ -17,11 +17,11 @@ export default combineReducers({
   eraserSize: strokeSize({name: 'ERASER', initial: 65}),
   pallet: setter({name: 'PALLET', initial: [
     '#fff',
+    '#222',
     '#00abff',
     '#7aff7a',
+    'yellow',
     '#f0c000',
     '#ff7a7a',
-    '#7a7aff',
-    'yellow',
   ]}),
 })
