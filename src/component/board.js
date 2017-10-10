@@ -1,10 +1,11 @@
 import store from '../lib/store.js'
+import imgData from '../assets/color-wheel-400-400.png'
 
 let {getState, dispatch} = store
 let historyIndex = 0
 let strokeBuffer = null
 
-const board = document.getElementById('slugboard')
+const board = document.getElementById('main-board')
 const ctx = board.getContext('2d')
 
 export const strokeRender = ({data, start=0}) => {
@@ -38,6 +39,15 @@ export const strokeRender = ({data, start=0}) => {
   }
 }
 
+let cutRender = ({x, y, width, height}) => {
+  ctx.fillStyle = '#000'
+  ctx.clearRect(x, y , width, height)
+}
+
+let imageRender = ({image, x, y}) => {
+  ctx.putImageData(image, x, y) 
+}
+
 export const draw = () => {
   let {history} = getState()
   let next = historyIndex || 0
@@ -47,7 +57,14 @@ export const draw = () => {
       case 'brush': case 'eraser': case 'roller':
         strokeRender(command)
         break;
+      case 'cut':
+        cutRender(command.data)
+        break;
+      case 'image':
+        imageRender(command.data)
+        break;
     }
+    historyIndex = next
   }
 }
 
@@ -77,6 +94,30 @@ export const undo = () => {
 export const redo = () => {
   store.dispatch({type: 'HISTORY_REDO'})
   refresh()
+}
+
+export const cut = ({x, y, width, height}, callback) => {
+  let image = ctx.getImageData(x,y, width, height) 
+  store.dispatch({
+    type: 'HISTORY_PUSH',
+    payload: {
+      action: 'cut',
+      data: {x, y, width, height},
+    },
+  })
+  callback(null, image)
+  draw()
+}
+
+export const paste = ({image, x, y}) => {
+  store.dispatch({
+    type: 'HISTORY_PUSH',
+    payload: {
+      action: 'image',
+      data: {image, x, y},
+    },
+  })
+  draw()
 }
 
 export const strokeCreate = ({x, y, type}) => {
@@ -119,4 +160,11 @@ board.addEventListener('mouseup', (e) => {
   strokeBuffer = null
   draw()
 })
+
+
+//setTimeout(() => {
+    //cut({x: 100, y: 100, width: 100, height: 100}, (err, data) => {
+      //console.log('data!!', data)
+    //})
+//}, 5000)
 

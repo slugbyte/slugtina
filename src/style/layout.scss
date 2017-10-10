@@ -2,9 +2,20 @@
   float: left;
 }
 
-.board {
-  height: 90%;
+.hide {
+  display: none;
 }
+
+.board {
+  position: relative;
+  height: 90%;
+  #main-board, #preview-board {
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }
+}
+
 
 .controller{
   height: 10%;

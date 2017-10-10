@@ -25,6 +25,11 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
+        test: /\.(jpg|png|gif|svg)$/,
+        exclude: /\.icon\.svg$/,
+        loader: 'file-loader',
+      },
+      {
         test: /\.scss/,
         loader: ExtractPlugin.extract({
           use: [
