@@ -3,7 +3,7 @@ export default (state='brush', {type, payload}) => {
     case 'TOOL_SET':
       return payload
     case 'COLOR_SET':
-      return 'brush'
+      return state !== 'eraser' ? state : 'brush'
     default: 
       return state
   }

@@ -1,9 +1,14 @@
 import store from '../lib/store.js'
 
-const brushSelectButton = document.getElementById('brush-select')
-const eraserSelectButton = document.getElementById('eraser-select')
 const brushSizeInput = document.getElementById('brush-size')
 const eraserSizeInput = document.getElementById('eraser-size')
+
+let buttons = {
+  brush: document.getElementById('brush-select'),
+  roller: document.getElementById('roller-select'),
+  select: document.getElementById('select-select'),
+  eraser: document.getElementById('eraser-select'),
+}
 
 const setToolHandler = (tool) => () => {
   store.dispatch({
@@ -19,8 +24,11 @@ const setToolSizeHandler = (tool) => (e) => {
   })
 }
 
-brushSelectButton.addEventListener('click', setToolHandler('brush'))
-eraserSelectButton.addEventListener('click', setToolHandler('eraser'))
+buttons.brush.addEventListener('click', setToolHandler('brush'))
+buttons.roller.addEventListener('click', setToolHandler('roller'))
+buttons.select.addEventListener('click', setToolHandler('select'))
+buttons.eraser.addEventListener('click', setToolHandler('eraser'))
+
 brushSizeInput.addEventListener('change', setToolSizeHandler('BRUSH'))
 eraserSizeInput.addEventListener('change', setToolSizeHandler('ERASER'))
 
@@ -29,12 +37,12 @@ store.subscribe(() => {
   brushSizeInput.value = brushSize
   eraserSizeInput.value = eraserSize 
 
-  if(tool === 'brush'){
-    brushSelectButton.className = 'selected'
-    eraserSelectButton.className = ''
-  } else {
-    brushSelectButton.className = ''
-    eraserSelectButton.className = 'selected'
-  }
+  Object.keys(buttons).forEach(key => {
+    console.log('key', key, tool)
+    if(key === tool)
+      buttons[key].className = 'selected'
+    else 
+      buttons[key].className = ''
+  })
   
 })

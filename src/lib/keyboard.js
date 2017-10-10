@@ -24,13 +24,13 @@ const toolSizeChange = (tool) => (amount) => {
 
 document.addEventListener('keydown', (e) => {
   switch(e.key){
-    case 'x':
+    case 'X':
       board.clear()
       break;
-    case 'u': case '<':
+     case '<':
       board.undo()
       break;
-    case 'r':  case '>':
+    case '>':
       board.redo()
       break;
     case 'e':
@@ -38,6 +38,12 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'b':
       toolSet('brush')
+      break;
+    case 'r':
+      toolSet('roller')
+      break;
+    case 's':
+      toolSet('select')
       break;
     case '=':
       toolSizeChange('BRUSH')(10)

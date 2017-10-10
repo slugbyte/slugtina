@@ -17,16 +17,20 @@ export const strokeRender = ({data, start=0}) => {
         ctx.lineWidth = stroke.size;
         ctx.shadowColor= stroke.color
         ctx.strokeStyle = stroke.color
+        ctx.fillStyle = stroke.color
         ctx.moveTo(stroke.x, stroke.y)
         ctx.beginPath()
         break
       case 'move':
         ctx.lineTo(stroke.x , stroke.y)
-        ctx.moveTo(stroke.x, stroke.y)
+        if(stroke.tool !== 'roller')
+          ctx.moveTo(stroke.x , stroke.y)
         break
       case 'up':
         ctx.closePath()
         ctx.stroke()
+        if(stroke.tool === 'roller')
+          ctx.fill()
         break
       default:
         ctx.lineTo(stroke.x, stroke.y)
@@ -40,7 +44,7 @@ export const draw = () => {
   for(;next < history.main.length; next++){
     const command = history.main[next]
     switch(command.action){
-      case 'brush':
+      case 'brush': case 'eraser': case 'roller':
         strokeRender(command)
         break;
     }
@@ -87,7 +91,8 @@ export const strokeCreate = ({x, y, type}) => {
 
 // events 
 board.addEventListener('mousedown', (e) => {
-  strokeBuffer = {action: 'brush', data: []}
+
+  strokeBuffer = {action: store.getState().tool , data: []}
   let data = strokeCreate({x: e.clientX, y: e.clientY, type: 'down'})
   strokeBuffer.data.push(data)
   ctx.lineWidth = data.size;
@@ -101,7 +106,6 @@ board.addEventListener('mousemove', (e) => {
   if(!strokeBuffer) return
   strokeBuffer.data.push(strokeCreate({x: e.clientX, y: e.clientY, type: 'move'}))
   ctx.lineTo(e.clientX, e.clientY)
-  ctx.moveTo(e.clientX, e.clientY)
   ctx.stroke()
 })
 
