@@ -4,18 +4,24 @@
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" type="text/css" href="style.css" />
-<link href="bundle.a8b5edcbd2bdee1c9f4d.css" rel="stylesheet"></head>
+<link href="bundle.d03d835e042132e5ff18.css" rel="stylesheet"></head>
 <body>
   <main class="container board">
-    <canvas id="slugboard"> </canvas>
+    <canvas id="main-board"> </canvas>
+    <canvas id="preview-board" class="hide"> </canvas>
   </main>
 
   <div class="container controller">
     <div class="container color-preview" id="color-preview"></div>
     <div class="container tool-box">
-      <button id="brush-select"> B </button> 
+      <div class="container tools">
+        <button id="roller-select"> R </button> 
+        <button id="brush-select"> B </button> 
+        <button id="select-select"> S </button> 
+        <button id="eraser-select"> E </button> 
+      </div>
+
       <input min="1" class="slider" id="brush-size" type="range" >
-      <button id="eraser-select"> E </button> 
       <input min="1" class="slider dark" id="eraser-size" type="range" >
     </div>
     <div class="container color-pallet" >
@@ -29,5 +35,5 @@
   </div>
 
   <script src="app.js"> </script>
-<script type="text/javascript" src="bundle.a8b5edcbd2bdee1c9f4d.js"></script></body>
+<script type="text/javascript" src="bundle.d03d835e042132e5ff18.js"></script></body>
 </html>

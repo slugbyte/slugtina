@@ -1,6 +1,6 @@
 {
   "name": "slugtina",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a drawing app for the web",
   "scripts": {
     "build": "webpack",
